@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<!--
+©2021 Michael Neill Hartman
+-->
+<html lang="en">
+<head>
+<title>typed</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=0.75">
+<style>
+.header{padding: 0px; text-align: center; color: #9d9d9d; background-color: #101010;}
+div{justify-items: center; overflow:hidden; width:100%;padding: 0px 0px;}
+body{background:#101010;}
+intro{text-align: left; color: #9d9d9d;}
+h1{margin-left: auto; margin-right:auto; text-align: center; color: #9d9d9d;}
+h3{padding: 20px 100px; margin-left: auto; margin-right:auto; text-align: center; color: #9d9d9d;}
+text{margin-left: auto; margin-right:auto; text-align: center; color: #9d9d9d};
+</style>
+</head>
+<body>
+<intro id=repeat></intro>
+<intro id=info></intro>
+<h1 id=basis></h1>
+</div>
+<script>
+
+// globals
+var time_to_hold_before_clearing=8
+var display_text="    Every year over 1.33 million people are killed on the world’s roads."
+var text_to_type= Array.from(display_text);
+var display_text_length=text_to_type.length;
+var intro_dom = document.getElementById("basis");
+var time_scale=0.1
+var time_scale_milli=time_scale*1000
+var accelerator=3
+
+console.log("time_scale_milli: " + time_scale_milli);
+
+var dd = new Date();
+var ss = dd.getTime();
+var start=ss
+
+var rawData = []
+function reload(){location.reload();}
+function repeat(){
+var main=document.getElementById("repeat");
+main.innerHTML = "repeat typed";
+main.id;
+main.addEventListener("mouseover", function(e){var target = e.target || e.srcElement; hover(main.id)}, false);
+main.addEventListener("mouseleave", function(e){var target = e.target || e.srcElement; leave(main.id)}, false);
+main.addEventListener("click", function(e){var target = e.target || e.srcElement; reload()}, false);
+}
+repeat();
+function display_info(){
+var main=document.getElementById("info");
+main.innerHTML = "(i)";
+main.id;
+main.addEventListener("mouseover", function(e){var target = e.target || e.srcElement; load_tooltip()}, false);
+main.addEventListener("mouseleave", function(e){var target = e.target || e.srcElement; clear_tooltip(main.id)}, false);
+}
+display_info();
+function load_tooltip(){
+var main=document.getElementById("info");
+main.style = "z-index: 1; font-size: 100%; outline-style: solid; color: rgb(119, 0, 255); outline-color: #FEFF4D; cursor: pointer;";
+var one = document.createElement("h3");
+one.id = "info_tip";
+one.innerHTML = "inspired by Typed.js // pure DOM metaprogramming implementation";
+main.appendChild(one);
+}
+function clear_tooltip(){
+var main= document.getElementById("info");
+while(main.firstChild){main.removeChild(main.firstChild);}
+main.innerHTML = "(i)";
+main.style = "z-index: 2;transform: scale(1);font-size: 100%; ";
+}
+function hover(id){
+var out = document.getElementById(id);
+out.style = "z-index: 1; font-size: 100%; outline-style: solid; color: rgb(119, 0, 255); outline-color: #FEFF4D; cursor: pointer;";
+}
+function leave(id){
+var out = document.getElementById(id);
+out.style = "z-index: 2;transform: scale(1);font-size: 100%; ";
+}
+function create_h4(parent,innerhtml,id){
+var one = document.createElement("h4");
+one.innerHTML = innerhtml;
+one.id=id;
+parent.appendChild(one);
+}
+function append_h4(parent,innerhtml,id){
+var one = document.getElementById(id)
+one.innerHTML = innerhtml;
+}
+function wipe_h4(parent,id){
+var one = document.getElementById(id);
+one.innerHTML = "";
+one.id=id;
+console.log("wipe_h4 executed");
+}
+function update_text(display_text){
+var d = new Date();
+var s = d.getTime();
+var now = (s-start)/1000
+var the_count=now*now*accelerator //(gets faster over time)
+//var the_count=now*accelerator // static speed
+//var the_count=now*accelerator*accelerator // static speed
+console.log(the_count);
+console.log(display_text_length);
+
+var text_iterator=0;
+var output_text=""
+for(var key of display_text){
+if(the_count > text_iterator){
+output_text+=key
+}
+text_iterator++
+}
+append_h4(intro_dom,output_text,"intro1")
+if(the_count > display_text_length){
+clearInterval(typing);
+} // if(the_count > display_text_length){
+} // update_text()
+function initialize_output(){
+total_daily=0;
+total_yearly=0;
+init=0;
+is_world=0;
+var intro_dom = document.getElementById("basis");
+intro_dom.innerHTML="";
+create_h4(intro_dom,"","intro1")
+}
+initialize_output();
+
+var typing = setInterval(() => {update_text(text_to_type);}, time_scale_milli);
+
+// for strobe
+//var clear_typing = setInterval(() => {wipe_h4(intro_dom,"intro1");}, display_text_length);
+
+var clear_typing = setInterval(() => {wipe_h4(intro_dom,"intro1");}, display_text_length*100+time_to_hold_before_clearing*100);
+
+</script>
+</body>
+</html>
