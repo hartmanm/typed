@@ -29,10 +29,10 @@ var info ="inspired by Typed.js : A vanilla js DOM metaprogramming implementatio
 // the speed characters are output at
 var typing_speed=12
 // seconds to hold message before clearing
-var time_to_hold_before_clearing=2
+var time_to_hold_before_clearing=0
 // larger is faster accelerates the speed characters are output at
 // no smaller than 1; 1 is no acceleration
-var accelerator=1
+var accelerator=2
 // frequency at which output is updated in milliseconds
 var update_frequency=100
 
@@ -123,10 +123,6 @@ clearInterval(typing_callback);
 } // if(the_count > display_text_length){
 } // update_text()
 function initialize_output(){
-total_daily=0;
-total_yearly=0;
-init=0;
-is_world=0;
 var intro_dom = document.getElementById("basis");
 intro_dom.innerHTML="";
 create_h4(intro_dom,"","intro1")
@@ -175,7 +171,7 @@ var display_iterator=0
 var hold=false
 var output_line=""
 var start=0
-time_to_hold_before_clearing+=4
+time_to_hold_before_clearing+=2
 // kick off processing 
 initialize_output();
 get_next_line();
