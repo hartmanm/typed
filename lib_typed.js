@@ -3,7 +3,6 @@ Copyright (c) 2019 Michael Neill Hartman. All rights reserved.
 mnh_license@proton.me
 https://github.com/hartmanm
 `
-const info ="A vanilla js Link Page with lambda_links";
 
 function reload(){location.reload();}
 function repeat(){
