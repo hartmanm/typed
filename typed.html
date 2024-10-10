@@ -35,7 +35,7 @@ var time_to_hold_before_clearing=0
 // no smaller than 1; 1 is no acceleration
 var accelerator=2
 // frequency at which output is updated in milliseconds
-var update_frequency=100
+var update_timeout_frequency=20
 
 const input_text=`
 SOFTWARE LICENSE AGREEMENT
@@ -209,7 +209,7 @@ var display_text_length=text_to_type.length;
 var main_loop_duration=(display_text_length*100)+(time_to_hold_before_clearing*1000)+1000
 var main_loop = setInterval(() => {get_next_line(main_loop);}, main_loop_duration);
 var typing = setInterval(() => {update_text(text_to_type,display_text_length,typing);}, 
-update_frequency);
+update_timeout_frequency);
 var clear_typing_duration=(display_text_length*100)+(time_to_hold_before_clearing*1000)
 var clear_typing = setInterval(() => {wipe_h4(intro_dom,"intro1",clear_typing);}, 
 clear_typing_duration);
